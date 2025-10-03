@@ -94,8 +94,9 @@ with tab3:
         get_radius=50000,
     )
 
+    # 🔹 MAPA GRATUITO (sin token de Mapbox)
     deck = pdk.Deck(
-        map_style="mapbox://styles/mapbox/satellite-streets-v12",
+        map_style=None,  # usa mapa libre de OpenStreetMap
         layers=[layer],
         initial_view_state=view_state,
         tooltip={"text": "Estimated impact location"}
@@ -165,4 +166,5 @@ st.markdown(
     "into asteroid impact risks and mitigation strategies. Through maps, orbital models, and physics-based "
     "calculations, it demonstrates how timely interventions can prevent catastrophic events."
 )
+
 
