@@ -1,8 +1,8 @@
 import streamlit as st
 import math
-import pydeck as pdk
 import plotly.graph_objects as go
 import plotly.express as px
+import pandas as pd
 
 st.set_page_config(page_title="Asteroid Impact Simulator", layout="wide")
 
@@ -84,24 +84,9 @@ with tab3:
     impact_lat = st.number_input("Select impact latitude (°)", -90.0, 90.0, 12.1)
     impact_lon = st.number_input("Select impact longitude (°)", -180.0, 180.0, -86.3)
 
-    view_state = pdk.ViewState(latitude=impact_lat, longitude=impact_lon, zoom=5, pitch=45)
-
-    layer = pdk.Layer(
-        "ScatterplotLayer",
-        data=[{"lat": impact_lat, "lon": impact_lon}],
-        get_position=["lon", "lat"],
-        get_color=[200, 30, 30],
-        get_radius=50000,
-    )
-
-    # 🔹 MAPA GRATUITO (sin token de Mapbox)
-    deck = pdk.Deck(
-        map_style=None,  # usa mapa libre de OpenStreetMap
-        layers=[layer],
-        initial_view_state=view_state,
-        tooltip={"text": "Estimated impact location"}
-    )
-    st.pydeck_chart(deck)
+    # Usamos st.map (más simple pero siempre visible)
+    df = pd.DataFrame({"lat": [impact_lat], "lon": [impact_lon]})
+    st.map(df, zoom=4)
 
     # --- ORBITAL SIMULATION ---
     st.subheader("Orbital Simulation (3D)")
@@ -166,5 +151,3 @@ st.markdown(
     "into asteroid impact risks and mitigation strategies. Through maps, orbital models, and physics-based "
     "calculations, it demonstrates how timely interventions can prevent catastrophic events."
 )
-
-
